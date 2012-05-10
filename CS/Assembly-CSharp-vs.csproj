@@ -69,8 +69,11 @@
      <Compile Include="Assets\Scripts\GUI\ComboBox.cs" />
      <Compile Include="Assets\Scripts\GUI\CrossHair.cs" />
      <Compile Include="Assets\Scripts\GUI\GameGUIController.cs" />
+     <Compile Include="Assets\Scripts\Network\Communicator.cs" />
+     <Compile Include="Assets\Scripts\Network\DataStructures.cs" />
      <Compile Include="Assets\Scripts\Others\GameController.cs" />
      <Compile Include="Assets\Scripts\Others\GameNetworkController.cs" />
+     <Compile Include="Assets\Scripts\Others\PrefabLoader.cs" />
      <Compile Include="Assets\Scripts\Weapons\Grenades\GrenadeController.cs" />
      <Compile Include="Assets\Scripts\Weapons\Grenades\GrenadeLauncherController.cs" />
      <Compile Include="Assets\Scripts\Weapons\GunBehaviour.cs" />
@@ -80,7 +83,6 @@
      <Compile Include="Assets\Scripts\Weapons\PlayerWeapons.cs" />
      <Compile Include="Assets\Scripts\Weapons\Rocket\RocketController.cs" />
      <Compile Include="Assets\Scripts\Weapons\Rocket\RocketLauncherController.cs" />
-     <Compile Include="Assets\check.cs" />
      <None Include="Assets\Photon Unity Networking\MarcoPolo-Tutorial\marcopolo-readme.txt" />
      <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
      <None Include="Assets\Standard Assets\Detonator\Resources\Detonator\Textures\HeatDistort.shader" />

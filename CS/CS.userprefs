@@ -1,9 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Others\GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Others\PrefabLoader.cs">
     <Files>
       <File FileName="Assets\Scripts\Others\GameController.cs" Line="30" Column="28" />
       <File FileName="Assets\Scripts\GUI\ComboBox.cs" Line="44" Column="6" />
+      <File FileName="Assets\Scripts\Others\PrefabLoader.cs" Line="12" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
