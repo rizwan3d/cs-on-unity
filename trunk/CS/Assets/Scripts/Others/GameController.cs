@@ -3,35 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public enum GameState
-{
-	INIT_GENERAL,
-	INIT_SERVER,
-	INIT_CLIENT,
-	PLAYING,
-	RESETTING,
-	PAUSE
-}
 
-public enum PlayerState
-{
-	DEATH,				// new to game or 
-	PLAYING
-}
-
-public enum Team
-{
-	Counters,
-	Terriors
-}
-
-public class CSCharacter
-{
-	public GameObject 	_model;
-	public string 		_playerId;
-	public string		_playerName;
-	public PlayerState	_playerState;
-}
 
 public class GameController : MonoBehaviour {
 	public int				_maxPlayers;
@@ -47,8 +19,6 @@ public class GameController : MonoBehaviour {
 	
 	public static GameState	_gameState;
 	
-	public UnityEngine.Object[] _availableMaps;
-	int numberOfMaps;
 	int choosingMapIndex;
 	public int MaxConnections
 	{
@@ -67,11 +37,7 @@ public class GameController : MonoBehaviour {
 		_gameState = GameState.INIT_GENERAL;
 		Screen.showCursor = true;
 		
-		// get available maps name
-		_availableMaps = Resources.LoadAll(@"Maps");
 		choosingMapIndex = 0;
-		numberOfMaps = _availableMaps.Length;
-		Debug.Log(numberOfMaps);
 	}
 	
 	// Update is called once per frame
@@ -121,17 +87,17 @@ public class GameController : MonoBehaviour {
 				choosingMapIndex--;
 				if(choosingMapIndex < 0)
 					choosingMapIndex = 0;
-				else if(choosingMapIndex >= numberOfMaps && numberOfMaps > 0)
-					choosingMapIndex = numberOfMaps - 1;					
+                else if (choosingMapIndex >= PrefabLoader.maps.Count && PrefabLoader.maps.Count > 0)
+                    choosingMapIndex = PrefabLoader.maps.Count - 1;					
 			}
-			GUILayout.Label(_availableMaps[choosingMapIndex].name);
+            GUILayout.Label(PrefabLoader.maps[choosingMapIndex]._name);
 			if(GUILayout.Button(">>"))
 			{
 				choosingMapIndex++;
 				if(choosingMapIndex < 0)
 					choosingMapIndex = 0;
-				else if(choosingMapIndex >= numberOfMaps && numberOfMaps > 0)
-					choosingMapIndex = numberOfMaps - 1;
+                else if (choosingMapIndex >= PrefabLoader.maps.Count && PrefabLoader.maps.Count > 0)
+                    choosingMapIndex = PrefabLoader.maps.Count - 1;
 			}
 			GUILayout.EndHorizontal();
 			
@@ -204,33 +170,20 @@ public class GameController : MonoBehaviour {
 	{
 	}
 	
-	System.Random ran = new System.Random();
+	
 	protected void InitServer()
-	{
-		ran.Next(0,1);
+	{		
 		if(Network.InitializeServer(MaxConnections, _port) == NetworkConnectionError.NoError)
 		{
 			//init map
-			_choosingMap = (GameObject)Resources.Load(@"Maps/CSMansion");
+            _choosingMap = PrefabLoader.GetMapModel(CSMapsName.cs_mansion);
 			Instantiate(_choosingMap, Vector3.zero, Quaternion.LookRotation(Vector3.forward, Vector3.up));
 			
-			//init player
-			if(_team == Team.Counters)
-			{
-				Transform generaters = _choosingMap.transform.FindChild("CounterGenerates");
-				int index = ran.Next(0,generaters.childCount);
-				Transform generater = generaters.GetChild(index);
-				_player = (GameObject)Resources.Load(@"Characters/PlayerPrefab");
-				Instantiate(_player, generater.transform.position, generater.rotation);
-			}else if(_team == Team.Terriors)
-			{
-				Transform generaters = _choosingMap.transform.FindChild("TerriorGenerates");
-				int index = ran.Next(0,generaters.childCount);
-				Transform generater = generaters.GetChild(index);
-				_player = (GameObject)Resources.Load(@"Characters/PlayerPrefab");
-				Instantiate(_player, generater.transform.position, generater.rotation);
-			}
-			
+			//init player			
+            Transform generator = CSMapPrefab.GetGenerator(_team, CSMapsName.cs_mansion);
+            _player = PrefabLoader.GetCharacterModel(CSCharactersName.player);
+            Instantiate(_player, generator.transform.position, generator.rotation);
+
 			Screen.showCursor = false;
 			_gameState = GameState.PLAYING;
 		}
